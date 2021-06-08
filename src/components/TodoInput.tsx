@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Platform, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 
 import checkIcon from '../assets/icons/Check.png';
@@ -8,10 +8,13 @@ interface TodoInputProps {
 }
 
 export function TodoInput({ addTask }: TodoInputProps) {
-  // const [task, setTask] = useState('');
+   const [task, setTask] = useState('');
 
+     
   function handleAddNewTask() {
     //TODO - Call addTask and clean input value 
+      addTask(task);     
+      setTask('');
   }
 
   return (
@@ -19,13 +22,18 @@ export function TodoInput({ addTask }: TodoInputProps) {
       <TextInput 
         style={styles.input} 
         placeholder="Adicionar novo todo..."
+        placeholderTextColor="black"
         returnKeyType="send"
+        onChangeText={setTask}
+        onSubmitEditing={handleAddNewTask}     
+        value={task}                      
         //TODO - use value, onChangeText and onSubmitEditing props
       />
       <TouchableOpacity
         testID="add-new-task-button"
         activeOpacity={0.7}
         style={styles.addButton}
+        onPress={handleAddNewTask}
         //TODO - onPress prop
       >
         <Image source={checkIcon} />
@@ -45,11 +53,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    flex: 1,
+    flex: 1,    
     backgroundColor: '#F5F4F8',
+    color: '#000000',
     paddingLeft: 12,
     borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
+    borderBottomLeftRadius: 5,    
   },
   inputIOSShadow: {
     shadowColor: "#000",

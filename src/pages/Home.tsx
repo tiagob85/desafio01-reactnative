@@ -33,15 +33,12 @@ export function Home() {
     //TODO - mark task as done if exists
 
     let index = tasks.findIndex((task => task.id === id))
-    console.log('Antes : '+tasks[index].done);
     if(tasks[index].done){
       tasks[index].done = false;  
     }
     else{
       tasks[index].done = true;  
     }
-   // tasks[index].done = true;
-    console.log('Depois : '+tasks[index].done);
     setTasks(oldState => oldState.filter(
       skill => skill.id !== id
     ));

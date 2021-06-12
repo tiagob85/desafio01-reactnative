@@ -31,7 +31,7 @@ export function Home() {
 
   function handleMarkTaskAsDone(id: number) {
     //TODO - mark task as done if exists
-
+    //Busca o indice da lista.
     let index = tasks.findIndex((task => task.id === id))
     if(tasks[index].done){
       tasks[index].done = false;  

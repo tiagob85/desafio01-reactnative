@@ -31,10 +31,21 @@ export function Home() {
 
   function handleMarkTaskAsDone(id: number) {
     //TODO - mark task as done if exists
-    setTasks(oldState => oldState.map(
-      skill => skill.id === id ? {...skill, done: false} : skill
-     )
-    );
+
+    let index = tasks.findIndex((task => task.id === id))
+    console.log('Antes : '+tasks[index].done);
+    if(tasks[index].done){
+      tasks[index].done = false;  
+    }
+    else{
+      tasks[index].done = true;  
+    }
+   // tasks[index].done = true;
+    console.log('Depois : '+tasks[index].done);
+    setTasks(oldState => oldState.filter(
+      skill => skill.id !== id
+    ));
+    setTasks(oldState =>[...oldState,tasks[index]]);
     
   }
 
@@ -43,6 +54,7 @@ export function Home() {
     setTasks(oldState => oldState.filter(
       skill => skill.id !== id
     ));
+    console.log('Saida : '+ tasks);
   }
 
   return (

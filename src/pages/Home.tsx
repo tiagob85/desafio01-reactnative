@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import {
-  View
+  View, 
+  Text,
+  TouchableOpacity
 } from 'react-native';
 
 import { Header } from '../components/Header';
@@ -15,6 +17,8 @@ interface Task {
 
 export function Home() {
    const [tasks, setTasks] = useState<Task[]>([]);
+   const [dark_mode, setDarkMode] = useState(false);
+   const [theme_name, setThemeName] = useState('Home 1');
 
   function handleAddTask(newTaskTitle: string) {
     //TODO - add new task if it's not empty
@@ -54,17 +58,42 @@ export function Home() {
     console.log('Saida : '+ tasks);
   }
 
-  return (
-    <View style={{backgroundColor: 'white'}}>
-      <Header />
+  function HandleThemeMode(){
+    if(dark_mode){
+      setDarkMode(false);
+      setThemeName('Home 1');
+    }
+    else{
+      setDarkMode(true);
+      setThemeName('Home 3');
+    }
+  }
 
-      <TodoInput addTask={handleAddTask}  />
+  return (
+    <View style={{backgroundColor: dark_mode?'#1F1F1F':'#FFFFFF'}}>  
+
+      <Header darkmode={dark_mode}/>
+
+      <TouchableOpacity
+        style={{ flexDirection:'column-reverse', position:'absolute', marginTop: 30, marginLeft: 15}}
+        activeOpacity={0.7}
+        onPress={HandleThemeMode}
+      >
+        <Text style={{fontSize: 18, color: '#FFFFFF'}}>{theme_name}</Text>
+      </TouchableOpacity>
+
+      <TodoInput 
+        addTask={handleAddTask} 
+        darkmode={dark_mode}        
+      />         
 
       <MyTasksList 
         tasks={tasks}        
         onPress={handleMarkTaskAsDone} 
         onLongPress={handleRemoveTask} 
+        darkmode={dark_mode}
       />
+
     </View>
   )
 }
